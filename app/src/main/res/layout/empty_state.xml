@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="212dp"
+        android:layout_height="212dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/empty_state" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:text="No task yet"
+        android:textAlignment="center"
+        android:textColor="@color/black_app"
+        android:textSize="26sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:text="Be sure to add your first task!"
+        android:textAlignment="center"
+        android:textColor="@color/black_app"
+        android:textSize="15sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addTaskButton"
+        style="?borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:fontFamily="@font/inter_bold"
+        android:letterSpacing=".05"
+        android:text="Add Task"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_grey_app"
+        app:backgroundTint="@color/white_app"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_plus"
+        app:iconGravity="textStart"
+        app:iconTint="@color/dark_grey_app" />
+
+</LinearLayout>
