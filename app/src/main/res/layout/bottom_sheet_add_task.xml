@@ -3,12 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?colorSurface"
     android:orientation="vertical"
     android:padding="24dp">
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -17,6 +22,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:hint="New task"
+            android:maxLines="2"
+            android:textColor="?colorOnSurface"
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -24,6 +31,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
         android:layout_marginTop="4dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -32,6 +43,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
             android:hint="Short Description"
+            android:textColor="?colorOnSurface"
+            android:maxLines="4"
             android:textSize="15sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/poppins"
         android:text="Importance"
-        android:textColor="@color/black_app" />
+        android:textColor="?colorOnSurface" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/importanceSlider"
@@ -59,7 +72,7 @@
         android:layout_marginTop="6dp"
         android:fontFamily="@font/poppins"
         android:text="Urgency"
-        android:textColor="@color/black_app" />
+        android:textColor="?colorOnSurface" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/urgencySlider"
@@ -76,8 +89,9 @@
         android:layout_marginTop="18dp"
         android:fontFamily="@font/inter_bold"
         android:text="Save"
+        android:textColor="?colorSurface"
         android:textAllCaps="false"
-        app:backgroundTint="@color/black_app"
+        app:backgroundTint="?colorOnSurface"
         app:cornerRadius="12dp" />
 
 </LinearLayout>

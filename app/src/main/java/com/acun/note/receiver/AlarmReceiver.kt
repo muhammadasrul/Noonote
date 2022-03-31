@@ -4,11 +4,9 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.SystemClock
-import android.util.Log
 import androidx.core.content.ContextCompat
-import com.acun.note.util.Constants.timerDataStoreName
-import com.acun.note.util.Constants.triggerTime
+import com.acun.note.util.Constants.IS_TIMER_ON
+import com.acun.note.util.Constants.TIME_PREFERENCE_NAME
 import com.acun.note.util.sendNotification
 
 class AlarmReceiver : BroadcastReceiver() {
@@ -19,7 +17,8 @@ class AlarmReceiver : BroadcastReceiver() {
             NotificationManager::class.java
         ) as NotificationManager
 
-        val pref = context.getSharedPreferences(timerDataStoreName, Context.MODE_PRIVATE)
+        val pref = context.getSharedPreferences(TIME_PREFERENCE_NAME, Context.MODE_PRIVATE)
+        pref.edit().putBoolean(IS_TIMER_ON, false).apply()
 
         notificationManager.sendNotification("Notif nih", context)
     }

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.acun.note.R
 import com.acun.note.databinding.TaskItemBinding
@@ -45,10 +44,10 @@ class TaskAdapter(
                 }
 
                 when (task.importance.plus(task.urgency).toInt()) {
-                    in 0..2 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.green_app))
-                    in 3..5 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.blue_app))
-                    in 6..8 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.yellow_app))
-                    in 9..10 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.red_app))
+                    in 0..2 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.success_app))
+                    in 3..5 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.primary_app))
+                    in 6..8 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.warning_app))
+                    in 9..10 -> taskLevelIcon.setCardBackgroundColor(ContextCompat.getColor(context, R.color.danger_app))
                 }
 
                 dotsImageView.setOnClickListener {

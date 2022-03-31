@@ -10,17 +10,17 @@ import androidx.core.app.NotificationCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.acun.note.ui.MainActivity
 import com.acun.note.R
-import com.acun.note.util.Constants.notificationChannel
-import com.acun.note.util.Constants.notificationId
+import com.acun.note.util.Constants.NOTIFICATION_CHANNEL
+import com.acun.note.util.Constants.NOTIFICATION_ID
 
 fun NotificationManager.sendNotification(message: String, context: Context) {
 
     val intent = Intent(context, MainActivity::class.java)
-    val pendingIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_MUTABLE)
+    val pendingIntent = PendingIntent.getActivity(context, NOTIFICATION_ID, intent, PendingIntent.FLAG_IMMUTABLE)
 
     val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-    val notificationBuilder = NotificationCompat.Builder(context, notificationChannel)
+    val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
         .setContentTitle("Note App")
         .setContentText(message)
         .setContentIntent(pendingIntent)
@@ -35,7 +35,7 @@ fun NotificationManager.sendNotification(message: String, context: Context) {
         )
     }
 
-    notify(notificationId, notificationBuilder.build())
+    notify(NOTIFICATION_ID, notificationBuilder.build())
 }
 
 fun NotificationManager.cancelNotification() {

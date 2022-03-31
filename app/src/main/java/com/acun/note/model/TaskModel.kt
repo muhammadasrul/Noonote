@@ -9,10 +9,10 @@ import com.acun.note.util.Constants.IMPORTANCE
 import com.acun.note.util.Constants.IS_COMPLETE
 import com.acun.note.util.Constants.TITLE
 import com.acun.note.util.Constants.URGENCY
-import com.acun.note.util.Constants.tableName
+import com.acun.note.util.Constants.NOTE_TABLE_NAME
 import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = tableName)
+@Entity(tableName = NOTE_TABLE_NAME)
 data class TaskModel(
 
     @PrimaryKey(autoGenerate = true)

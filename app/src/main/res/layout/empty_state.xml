@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
+    android:background="?colorSurface"
     android:orientation="vertical"
     android:padding="4dp">
 
@@ -18,9 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_bold"
-        android:text="No task yet"
+        android:text="What your focus today?"
         android:textAlignment="center"
-        android:textColor="@color/black_app"
+        android:textColor="?colorOnSurface"
         android:textSize="26sp" />
 
     <TextView
@@ -29,7 +30,7 @@
         android:fontFamily="@font/poppins"
         android:text="Be sure to add your first task!"
         android:textAlignment="center"
-        android:textColor="@color/black_app"
+        android:textColor="?colorOnSurface"
         android:textSize="15sp" />
 
     <com.google.android.material.button.MaterialButton

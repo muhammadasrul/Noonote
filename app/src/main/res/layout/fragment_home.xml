@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?colorSurface"
     tools:context=".ui.home.HomeFragment">
 
     <com.google.android.material.card.MaterialCardView
@@ -18,84 +19,120 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="172dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_card_bg"
-            tools:ignore="ContentDescription" />
+            android:background="@drawable/ic_card_bg">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/leftButton"
+                style="?borderlessButtonStyle"
+                android:layout_width="56dp"
+                android:layout_height="0dp"
+                android:alpha=".6"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                app:backgroundTint="@android:color/transparent"
+                app:icon="@drawable/ic_arrow_left"
+                app:iconGravity="textStart"
+                app:iconTint="@color/white_app"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rightButton"
+                style="?borderlessButtonStyle"
+                android:layout_width="56dp"
+                android:layout_height="0dp"
+                android:alpha=".6"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                app:backgroundTint="@android:color/transparent"
+                app:icon="@drawable/ic_arrow_right"
+                app:iconGravity="textStart"
+                app:iconTint="@color/white_app"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/timerDisplayTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:fontFamily="@font/inter_bold"
+                android:textColor="@color/white_app"
+                android:textSize="36sp"
+                app:layout_constraintBottom_toTopOf="@id/statusTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="25:00" />
+
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/white_app"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Break time" />
+
+            <LinearLayout
+                android:id="@+id/timerControlLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/statusTextView">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/startButton"
+                    style="?borderlessButtonStyle"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    app:backgroundTint="@android:color/transparent"
+                    app:cornerRadius="18dp"
+                    app:icon="@drawable/ic_playcircle"
+                    app:iconGravity="start"
+                    app:iconTint="@color/white_app" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/resetButton"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="8dp"
+                    android:insetLeft="0dp"
+                    android:insetTop="0dp"
+                    android:insetRight="0dp"
+                    android:insetBottom="0dp"
+                    android:padding="0dp"
+                    android:visibility="gone"
+                    app:backgroundTint="@android:color/transparent"
+                    app:icon="@drawable/ic_arrowscounterclockwise"
+                    app:iconGravity="start"
+                    app:iconTint="@color/white_app" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/timerDisplayTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:fontFamily="@font/inter_bold"
-        android:textColor="@color/white_app"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@id/statusTextView"
-        app:layout_constraintEnd_toEndOf="@id/timerCardView"
-        app:layout_constraintStart_toStartOf="@id/timerCardView"
-        android:text="25:00" />
-
-    <TextView
-        android:id="@+id/statusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:fontFamily="@font/poppins"
-        android:textColor="@color/white_app"
-        app:layout_constraintBottom_toBottomOf="@id/timerCardView"
-        app:layout_constraintEnd_toEndOf="@id/timerCardView"
-        app:layout_constraintStart_toStartOf="@id/timerCardView"
-        app:layout_constraintTop_toTopOf="@id/timerCardView"
-        tools:text="Break time" />
-
-    <LinearLayout
-        android:id="@+id/timerControlLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:elevation="4dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/timerCardView"
-        app:layout_constraintStart_toStartOf="@id/timerCardView"
-        app:layout_constraintTop_toBottomOf="@id/statusTextView">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/startButton"
-            style="?borderlessButtonStyle"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            android:padding="0dp"
-            app:backgroundTint="@android:color/transparent"
-            app:cornerRadius="18dp"
-            app:icon="@drawable/ic_playcircle"
-            app:iconGravity="start"
-            app:iconTint="@color/white_app" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/resetButton"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="8dp"
-            android:insetLeft="0dp"
-            android:insetTop="0dp"
-            android:insetRight="0dp"
-            android:insetBottom="0dp"
-            android:padding="0dp"
-            android:visibility="gone"
-            app:backgroundTint="@android:color/transparent"
-            app:icon="@drawable/ic_arrowscounterclockwise"
-            app:iconGravity="start"
-            app:iconTint="@color/white_app" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/todoTextView"
@@ -105,7 +142,7 @@
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/inter_bold"
         android:text="Todo"
-        android:textColor="@color/black_app"
+        android:textColor="?colorOnSurface"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

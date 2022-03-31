@@ -17,9 +17,17 @@ import androidx.lifecycle.viewModelScope
 import com.acun.note.model.TaskModel
 import com.acun.note.receiver.AlarmReceiver
 import com.acun.note.repository.Repository
-import com.acun.note.util.Constants.requestCode
-import com.acun.note.util.Constants.timerDataStoreName
-import com.acun.note.util.Constants.triggerTime
+import com.acun.note.util.Constants.DEFAULT_FOCUS_TIME
+import com.acun.note.util.Constants.DEFAULT_LONG_BREAK_TIME
+import com.acun.note.util.Constants.DEFAULT_SHORT_BREAK_TIME
+import com.acun.note.util.Constants.FOCUS_TIME
+import com.acun.note.util.Constants.IS_TIMER_ON
+import com.acun.note.util.Constants.LONG_BREAK_TIME
+import com.acun.note.util.Constants.POMODORO_STATE
+import com.acun.note.util.Constants.REQUEST_CODE
+import com.acun.note.util.Constants.SHORT_BREAK_TIME
+import com.acun.note.util.Constants.TIME_PREFERENCE_NAME
+import com.acun.note.util.Constants.TRIGGER_TIME
 import com.acun.note.util.ViewState
 import com.acun.note.util.cancelNotification
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,38 +41,34 @@ class HomeViewModel @Inject constructor(
     private val repository: Repository
 ) : AndroidViewModel(app) {
 
+    private val TAG = HomeViewModel::class.java.simpleName
+
     private val _isTimerOn = MutableLiveData<Boolean>()
     val isTimerOn: LiveData<Boolean> = _isTimerOn
 
     private val _elapsedTime = MutableLiveData<Long>()
     val elapsedTime: LiveData<Long> = _elapsedTime
 
-    private val _timer = MutableLiveData<Long>()
-    fun setTimer(timer: Long) {
-        _timer.value = timer
-    }
+    private val _timeTimerState = MutableLiveData<String>()
+    val timeTimerState: LiveData<String> = _timeTimerState
+    private val _timeSelection = MutableLiveData<Long>()
 
     private val notificationIntent = Intent(getApplication(), AlarmReceiver::class.java)
     private val alarmManager = app.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     private val notifyPendingIntent: PendingIntent
     private lateinit var timer: CountDownTimer
 
-    private val pref = app.getSharedPreferences(timerDataStoreName, Context.MODE_PRIVATE)
+    private val pref = app.getSharedPreferences(TIME_PREFERENCE_NAME, Context.MODE_PRIVATE)
 
     private val _taskList = MutableLiveData<ViewState<List<TaskModel>>>()
     val taskList: LiveData<ViewState<List<TaskModel>>> = _taskList
 
     init {
-        _isTimerOn.value = PendingIntent.getBroadcast(
-            getApplication(),
-            requestCode,
-            notificationIntent,
-            PendingIntent.FLAG_IMMUTABLE
-        ) != null
+        _isTimerOn.value = pref.getBoolean(IS_TIMER_ON, false)
 
         notifyPendingIntent = PendingIntent.getBroadcast(
             getApplication(),
-            requestCode,
+            REQUEST_CODE,
             notificationIntent,
             PendingIntent.FLAG_IMMUTABLE
         )
@@ -73,12 +77,25 @@ class HomeViewModel @Inject constructor(
             createTimer()
         }
 
+        pref.getString(POMODORO_STATE, FOCUS_TIME)?.let { setTimeState(it) }
         getAllTask()
+    }
+
+    fun setTimeState(state: String) {
+        val time = when(state) {
+            FOCUS_TIME -> pref.getLong(FOCUS_TIME, DEFAULT_FOCUS_TIME)
+            SHORT_BREAK_TIME -> pref.getLong(SHORT_BREAK_TIME, DEFAULT_SHORT_BREAK_TIME)
+            LONG_BREAK_TIME -> pref.getLong(LONG_BREAK_TIME, DEFAULT_LONG_BREAK_TIME)
+            else -> 0
+        }
+        _timeSelection.value = time
+        _timeTimerState.value = state
+        pref.edit().putString(POMODORO_STATE, state).apply()
     }
 
     fun setTimer(isStarted: Boolean) {
         if (isStarted) {
-            _timer.value?.let { startTimer(it) }
+            _timeSelection.value?.let { startTimer(it) }
         } else {
             cancelNotification()
         }
@@ -93,6 +110,7 @@ class HomeViewModel @Inject constructor(
         _isTimerOn.value?.let { isTimerOn ->
             if (!isTimerOn) {
                 _isTimerOn.value = true
+                pref.edit().putBoolean(IS_TIMER_ON, true).apply()
                 val triggerTime = SystemClock.elapsedRealtime() + timerLength
 
                 val notificationManager = ContextCompat.getSystemService(
@@ -139,14 +157,15 @@ class HomeViewModel @Inject constructor(
         timer.cancel()
         _elapsedTime.value = 0
         _isTimerOn.value = false
+        pref.edit().putBoolean(IS_TIMER_ON, false).apply()
     }
 
     private fun saveTime(time: Long) {
-        pref.edit().putLong(triggerTime, time).apply()
+        pref.edit().putLong(TRIGGER_TIME, time).apply()
     }
 
     private fun loadTime(): Long {
-        return pref.getLong(triggerTime, 0)
+        return pref.getLong(TRIGGER_TIME, 0)
     }
 
     private fun getAllTask() {

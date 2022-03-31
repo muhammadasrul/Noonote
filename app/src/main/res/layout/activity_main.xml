@@ -20,10 +20,12 @@
             style="@style/Theme.NoteApp.ToolBar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:paddingEnd="6dp"
+            app:menu="@menu/main_menu"
             app:title="AstroNote" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/fragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"

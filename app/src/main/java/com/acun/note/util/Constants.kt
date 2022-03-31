@@ -1,14 +1,13 @@
 package com.acun.note.util
 
 object Constants {
-    const val notificationId = 0
-    const val notificationChannel = "notification"
-    const val timerDataStoreName = "timerDataStore"
+    const val NOTIFICATION_ID = 0
+    const val NOTIFICATION_CHANNEL = "notification"
 
-    const val triggerTime = "trigger_time"
-    const val requestCode = 0
+    const val TRIGGER_TIME = "trigger_time"
+    const val REQUEST_CODE = 0
 
-    const val tableName = "note"
+    const val NOTE_TABLE_NAME = "note"
     const val ID = "id"
     const val TITLE = "title"
     const val IS_COMPLETE = "isComplete"
@@ -23,6 +22,16 @@ object Constants {
     const val SHORT_BREAK_TIME = "short_break_time"
     const val LONG_BREAK_TIME = "long_break_time"
     const val FOCUS_TIME = "focus_time"
+    const val POMODORO_STATE = "pomodoro_state"
+    const val IS_TIMER_ON = "is_timer_on"
 
+    const val DEFAULT_SHORT_BREAK_TIME = 300_000L
+    const val DEFAULT_LONG_BREAK_TIME = 900_000L
+    const val DEFAULT_FOCUS_TIME = 1_500_000L
 
+    val pomodoroName = hashMapOf(
+        SHORT_BREAK_TIME to "Short Break",
+        LONG_BREAK_TIME to "Long Break",
+        FOCUS_TIME to "Focus Time"
+    )
 }

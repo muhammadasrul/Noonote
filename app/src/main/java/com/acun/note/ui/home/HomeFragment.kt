@@ -4,12 +4,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.PopupMenu
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.acun.note.R
@@ -24,11 +25,18 @@ import com.acun.note.databinding.BottomSheetAddTaskBinding
 import com.acun.note.databinding.FragmentHomeBinding
 import com.acun.note.model.TaskModel
 import com.acun.note.ui.adapter.TaskAdapter
+import com.acun.note.util.Constants.DEFAULT_FOCUS_TIME
+import com.acun.note.util.Constants.DEFAULT_LONG_BREAK_TIME
+import com.acun.note.util.Constants.DEFAULT_SHORT_BREAK_TIME
 import com.acun.note.util.Constants.FOCUS_TIME
 import com.acun.note.util.Constants.IS_DARK_MODE
+import com.acun.note.util.Constants.LONG_BREAK_TIME
 import com.acun.note.util.Constants.THEME_PREFERENCE_NAME
 import com.acun.note.util.Constants.TIME_PREFERENCE_NAME
-import com.acun.note.util.Constants.notificationChannel
+import com.acun.note.util.Constants.NOTIFICATION_CHANNEL
+import com.acun.note.util.Constants.POMODORO_STATE
+import com.acun.note.util.Constants.SHORT_BREAK_TIME
+import com.acun.note.util.Constants.pomodoroName
 import com.acun.note.util.ViewState
 import com.acun.note.util.timeDisplay
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -51,7 +59,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        createChannel(notificationChannel, "channelName")
+        createChannel(NOTIFICATION_CHANNEL, "channelName")
         themeSharedPref = requireActivity().getSharedPreferences(THEME_PREFERENCE_NAME, Context.MODE_PRIVATE)
         timeSharedPref = requireActivity().getSharedPreferences(TIME_PREFERENCE_NAME, Context.MODE_PRIVATE)
 
@@ -65,14 +73,41 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-        val timer = timeSharedPref.getLong(FOCUS_TIME, 1_500_000)
-        viewModel.setTimer(timer)
+        viewModel.timeTimerState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                FOCUS_TIME -> binding.timerDisplayTextView.timeDisplay(timeSharedPref.getLong(state, DEFAULT_FOCUS_TIME))
+                SHORT_BREAK_TIME -> binding.timerDisplayTextView.timeDisplay(timeSharedPref.getLong(state, DEFAULT_SHORT_BREAK_TIME))
+                LONG_BREAK_TIME -> binding.timerDisplayTextView.timeDisplay(timeSharedPref.getLong(state, DEFAULT_LONG_BREAK_TIME))
+            }
+            binding.statusTextView.text = pomodoroName[state]
 
-        viewModel.elapsedTime.observe(viewLifecycleOwner) {
-            binding.timerDisplayTextView.timeDisplay(it)
+            binding.rightButton.setOnClickListener {
+                when (state) {
+                    FOCUS_TIME -> viewModel.setTimeState(SHORT_BREAK_TIME)
+                    SHORT_BREAK_TIME -> viewModel.setTimeState(LONG_BREAK_TIME)
+                    LONG_BREAK_TIME -> viewModel.setTimeState(FOCUS_TIME)
+                }
+            }
+            binding.leftButton.setOnClickListener {
+                when (state) {
+                    FOCUS_TIME -> viewModel.setTimeState(LONG_BREAK_TIME)
+                    SHORT_BREAK_TIME -> viewModel.setTimeState(FOCUS_TIME)
+                    LONG_BREAK_TIME -> viewModel.setTimeState(SHORT_BREAK_TIME)
+                }
+            }
         }
 
-        binding.statusTextView.text = "Focus Time"
+
+        viewModel.elapsedTime.observe(viewLifecycleOwner) {
+            if (it != 0L) {
+                binding.timerDisplayTextView.timeDisplay(it)
+                binding.leftButton.visibility = View.GONE
+                binding.rightButton.visibility = View.GONE
+            } else {
+                binding.leftButton.visibility = View.VISIBLE
+                binding.rightButton.visibility = View.VISIBLE
+            }
+        }
 
         viewModel.isTimerOn.observe(viewLifecycleOwner) { isTimerOn ->
             binding.startButton.icon = if (isTimerOn) {
@@ -163,7 +198,6 @@ class HomeFragment : Fragment() {
             requireContext(),
             R.style.Theme_NoteApp_MaterialAlertDialog_Rounded
         ).apply {
-            setTitle("Add New Task")
             setView(addTaskBinding.root)
             create()
         }.show()
@@ -207,6 +241,10 @@ class HomeFragment : Fragment() {
                 themeSharedPref.edit().putBoolean(IS_DARK_MODE, !isDarkMode).apply()
                 true
             }
+            R.id.settingsMenu -> {
+                findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -214,5 +252,13 @@ class HomeFragment : Fragment() {
     private fun updateTheme(mode: Int) {
         AppCompatDelegate.setDefaultNightMode(mode)
         requireActivity().recreate()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        timeSharedPref.getString(POMODORO_STATE, FOCUS_TIME)?.let {
+            viewModel.setTimeState(it)
+        }
     }
 }

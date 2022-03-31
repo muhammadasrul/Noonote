@@ -5,5 +5,13 @@
         android:id="@+id/themePreference"
         android:icon="@drawable/ic_moon"
         android:title="Theme Preference"
+        app:iconTint="?colorControlNormal"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/settingsMenu"
+        android:icon="@drawable/ic_gearsix"
+        android:title="Settings"
+        app:iconTint="?colorControlNormal"
+        app:showAsAction="ifRoom"/>
 </menu>

@@ -15,8 +15,13 @@
     <color name="dark_blue_app">#FF5F7EE0</color>
     <color name="light_blue_app">#FF7FA2F2</color>
 
-    <color name="red_app">#FFFF434E</color>
-    <color name="green_app">#FF46D493</color>
-    <color name="yellow_app">#FFFFA035</color>
-    <color name="blue_app">#FF0078FD</color>
+    <color name="danger_app">#FFFF434E</color>
+    <color name="success_app">#FF46D493</color>
+    <color name="warning_app">#FFFFA035</color>
+    <color name="primary_app">#FF0078FD</color>
+
+    <color name="dark_mode_primary">#FF152453</color>
+    <color name="dark_mode_secondary">#FF43507A</color>
+
+    <color name="taskBackground">#3DD4DCF4</color>
 </resources>
