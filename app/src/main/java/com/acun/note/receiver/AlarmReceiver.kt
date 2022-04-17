@@ -20,6 +20,6 @@ class AlarmReceiver : BroadcastReceiver() {
         val pref = context.getSharedPreferences(TIME_PREFERENCE_NAME, Context.MODE_PRIVATE)
         pref.edit().putBoolean(IS_TIMER_ON, false).apply()
 
-        notificationManager.sendNotification("Notif nih", context)
+        notificationManager.sendNotification("Time's up", context)
     }
 }

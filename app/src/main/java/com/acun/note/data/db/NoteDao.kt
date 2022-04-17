@@ -1,22 +1,50 @@
 package com.acun.note.data.db
 
 import androidx.room.*
+import com.acun.note.model.FolderModel
+import com.acun.note.model.NoteModel
 import com.acun.note.model.TaskModel
+import com.acun.note.util.Constants.FOLDER_TABLE_NAME
 import com.acun.note.util.Constants.NOTE_TABLE_NAME
+import com.acun.note.util.Constants.TASK_TABLE_NAME
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(task: TaskModel)
+    suspend fun insertTask(task: TaskModel)
 
     @Delete
-    suspend fun delete(task: TaskModel)
+    suspend fun deleteTask(task: TaskModel)
 
-    @Query("SELECT * FROM $NOTE_TABLE_NAME")
+    @Query("SELECT * FROM $TASK_TABLE_NAME")
     fun getAllTask(): Flow<List<TaskModel>>
 
     @Update
-    suspend fun update(task: TaskModel)
+    suspend fun updateTask(task: TaskModel)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNote(task: NoteModel)
+
+    @Delete
+    suspend fun deleteNote(note: NoteModel)
+
+    @Query("SELECT * FROM $NOTE_TABLE_NAME")
+    fun getAllNote(): Flow<List<NoteModel>>
+
+    @Update
+    suspend fun updateNote(task: NoteModel)
+
+    @Query("SELECT * FROM $FOLDER_TABLE_NAME")
+    fun getFolder(): Flow<List<FolderModel>>
+
+    @Insert
+    suspend fun insertFolder(folder: FolderModel)
+
+    @Delete
+    suspend fun deleteFolder(folder: FolderModel)
+
+    @Query("SELECT * FROM $NOTE_TABLE_NAME WHERE category_id = :folderId")
+    fun getNoteByFolder(folderId: Int): Flow<List<NoteModel>>
 }

@@ -21,8 +21,9 @@ fun NotificationManager.sendNotification(message: String, context: Context) {
     val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
     val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL)
-        .setContentTitle("Note App")
+        .setContentTitle(context.getString(R.string.app_name))
         .setContentText(message)
+        .setSmallIcon(R.mipmap.ic_launcher)
         .setContentIntent(pendingIntent)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setSound(notificationSound)

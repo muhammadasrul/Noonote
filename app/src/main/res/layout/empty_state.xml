@@ -16,22 +16,24 @@
         app:lottie_rawRes="@raw/empty_state" />
 
     <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_bold"
-        android:text="What your focus today?"
+        android:text="What is your focus main today?"
         android:textAlignment="center"
         android:textColor="?colorOnSurface"
-        android:textSize="26sp" />
+        android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/descTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins"
         android:text="Be sure to add your first task!"
         android:textAlignment="center"
         android:textColor="?colorOnSurface"
-        android:textSize="15sp" />
+        android:textSize="13sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addTaskButton"
