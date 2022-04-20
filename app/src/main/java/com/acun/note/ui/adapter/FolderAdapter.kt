@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.acun.note.databinding.FolderItemBinding
 import com.acun.note.model.FolderModel
-import com.acun.note.model.NoteModel
 
 class FolderAdapter : ListAdapter<FolderModel, FolderAdapter.FolderViewHolder>(FolderDiffCallback) {
 

@@ -7,10 +7,9 @@ import com.acun.note.util.Constants.DESCRIPTION
 import com.acun.note.util.Constants.ID
 import com.acun.note.util.Constants.IMPORTANCE
 import com.acun.note.util.Constants.IS_COMPLETE
+import com.acun.note.util.Constants.TASK_TABLE_NAME
 import com.acun.note.util.Constants.TITLE
 import com.acun.note.util.Constants.URGENCY
-import com.acun.note.util.Constants.NOTE_TABLE_NAME
-import com.acun.note.util.Constants.TASK_TABLE_NAME
 import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = TASK_TABLE_NAME)

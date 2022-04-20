@@ -11,14 +11,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="18dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingStart="18dp"
+            android:paddingTop="18dp"
+            android:paddingEnd="18dp"
             android:src="@drawable/folder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_bold"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="18dp"
             android:textAlignment="center"
             android:textColor="?colorOnSurface"
             android:textSize="18sp"
@@ -43,10 +47,12 @@
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:clickable="false"
             android:focusable="false"
             android:minWidth="0dp"
             android:minHeight="0dp"
+            android:layout_marginEnd="8dp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

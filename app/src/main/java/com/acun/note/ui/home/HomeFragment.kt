@@ -7,9 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
@@ -31,11 +29,11 @@ import com.acun.note.util.Constants.DEFAULT_SHORT_BREAK_TIME
 import com.acun.note.util.Constants.FOCUS_TIME
 import com.acun.note.util.Constants.IS_DARK_MODE
 import com.acun.note.util.Constants.LONG_BREAK_TIME
-import com.acun.note.util.Constants.THEME_PREFERENCE_NAME
-import com.acun.note.util.Constants.TIME_PREFERENCE_NAME
 import com.acun.note.util.Constants.NOTIFICATION_CHANNEL
 import com.acun.note.util.Constants.POMODORO_STATE
 import com.acun.note.util.Constants.SHORT_BREAK_TIME
+import com.acun.note.util.Constants.THEME_PREFERENCE_NAME
+import com.acun.note.util.Constants.TIME_PREFERENCE_NAME
 import com.acun.note.util.Constants.pomodoroName
 import com.acun.note.util.ViewState
 import com.acun.note.util.timeDisplay
@@ -141,7 +139,7 @@ class HomeFragment : Fragment() {
                                     viewModel.updateTask(task.copy(isCompleted = !task.isCompleted))
                                 },
                                 onDotsClicked = { task ->
-                                    viewModel.deleteTask(task)
+                                    deleteTask(task)
                                 },
                                 onExpandClicked = { pos, taskDescTextView ->
                                     if (currentTaskPos != pos) {
@@ -194,10 +192,7 @@ class HomeFragment : Fragment() {
     private fun addTaskView() {
         val addTaskBinding =
             BottomSheetAddTaskBinding.inflate(LayoutInflater.from(requireContext()))
-        val builder = MaterialAlertDialogBuilder(
-            requireContext(),
-            R.style.Theme_NoteApp_MaterialAlertDialog_Rounded
-        ).apply {
+        val builder = MaterialAlertDialogBuilder(requireContext(), R.style.Theme_NoteApp_MaterialAlertDialog_Rounded).apply {
             setView(addTaskBinding.root)
             create()
         }.show()
@@ -215,6 +210,19 @@ class HomeFragment : Fragment() {
             )
             builder.dismiss()
         }
+    }
+
+    private fun deleteTask(task: TaskModel) {
+        MaterialAlertDialogBuilder(requireContext(), R.style.Theme_NoteApp_MaterialAlertDialog_Rounded)
+            .setTitle("Delete")
+            .setMessage("Are you sure?")
+            .setPositiveButton("Delete") { _, _ ->
+                viewModel.deleteTask(task)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

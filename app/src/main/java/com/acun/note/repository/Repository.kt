@@ -1,5 +1,6 @@
 package com.acun.note.repository
 
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.acun.note.data.db.NoteDao
 import com.acun.note.model.FolderModel
 import com.acun.note.model.NoteModel
@@ -37,8 +38,8 @@ class Repository @Inject constructor(private val noteDao: NoteDao) {
         noteDao.deleteNote(note)
     }
 
-    fun getAllNote(): Flow<List<NoteModel>> {
-        return noteDao.getAllNote()
+    fun getAllNote(query: SimpleSQLiteQuery): Flow<List<NoteModel>> {
+        return noteDao.getAllNote(query)
     }
 
     fun getFolder(): Flow<List<FolderModel>> {

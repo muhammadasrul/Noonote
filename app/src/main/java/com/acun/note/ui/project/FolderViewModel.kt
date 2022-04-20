@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.acun.note.model.FolderModel
-import com.acun.note.model.NoteModel
 import com.acun.note.repository.Repository
 import com.acun.note.util.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel

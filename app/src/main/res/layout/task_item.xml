@@ -85,10 +85,11 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="12dp"
-                android:src="@drawable/ic_dots"
+                android:src="@drawable/ic_baseline_clear_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/dark_grey_app" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

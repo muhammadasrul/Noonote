@@ -7,4 +7,8 @@
         android:title="Delete"
         app:iconTint="?colorControlNormal"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/move_to_menu"
+        android:title="Move to..."
+        app:showAsAction="always" />
 </menu>

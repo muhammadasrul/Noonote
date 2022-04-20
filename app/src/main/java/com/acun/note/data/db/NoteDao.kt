@@ -1,6 +1,7 @@
 package com.acun.note.data.db
 
 import androidx.room.*
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.acun.note.model.FolderModel
 import com.acun.note.model.NoteModel
 import com.acun.note.model.TaskModel
@@ -30,8 +31,8 @@ interface NoteDao {
     @Delete
     suspend fun deleteNote(note: NoteModel)
 
-    @Query("SELECT * FROM $NOTE_TABLE_NAME")
-    fun getAllNote(): Flow<List<NoteModel>>
+    @RawQuery(observedEntities = [NoteModel::class])
+    fun getAllNote(query: SimpleSQLiteQuery): Flow<List<NoteModel>>
 
     @Update
     suspend fun updateNote(task: NoteModel)

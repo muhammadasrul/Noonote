@@ -65,10 +65,12 @@ class FolderFragment : Fragment() {
             when (state) {
                 is ViewState.Success -> {
                     binding.emptyState.root.visibility = View.GONE
+                    binding.addFolderFab.visibility = View.VISIBLE
                     folderAdapter.submitList(state.data)
                 }
                 is ViewState.Empty -> {
                     binding.emptyState.root.visibility = View.VISIBLE
+                    binding.addFolderFab.visibility = View.GONE
                     binding.emptyState.addTaskButton.text = "Add folder"
                     binding.emptyState.titleTextView.text = "No folder yet"
                     binding.emptyState.descTextView.text = "Be sure to add your first folder"
@@ -131,6 +133,19 @@ class FolderFragment : Fragment() {
 
     }
 
+    private fun deleteFolder(folderList: List<FolderModel>) {
+        MaterialAlertDialogBuilder(requireContext(), R.style.Theme_NoteApp_MaterialAlertDialog_Rounded)
+            .setTitle("Delete")
+            .setMessage("Are you sure?")
+            .setPositiveButton("Delete") { _, _ ->
+                viewModel.deleteFolder(folderList)
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.delete_menu, menu)
@@ -139,8 +154,8 @@ class FolderFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.delete_menu -> {
-                val noteList: List<FolderModel> = folderMap.values.toList()
-                viewModel.deleteFolder(noteList)
+                val folderList: List<FolderModel> = folderMap.values.toList()
+                deleteFolder(folderList)
                 folderMap.clear()
                 viewModel.selectFolder(folderMap)
                 return true
