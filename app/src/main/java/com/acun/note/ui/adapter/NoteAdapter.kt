@@ -28,23 +28,23 @@ class NoteAdapter : ListAdapter<NoteModel, NoteAdapter.NoteViewHolder>(NoteDiffC
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.bind(currentList[position], position)
+        holder.bind(currentList[position])
     }
 
     override fun getItemCount(): Int = currentList.size
 
     inner class NoteViewHolder(private val binding: NoteItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: NoteModel, position: Int) {
+        fun bind(note: NoteModel) {
             with(binding) {
                 titleTextView.text = note.title
                 descTextView.text = note.description
                 val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                 dateTextView.text = sdf.format(note.create_at)
                 root.setOnClickListener {
-                    onItemClickListener?.onItemClicked(position, note)
+                    onItemClickListener?.onItemClicked(adapterPosition, note)
                 }
                 root.setOnLongClickListener {
-                    onItemLongClickListener?.onItemClicked(position, note)
+                    onItemLongClickListener?.onItemClicked(adapterPosition, note)
                     return@setOnLongClickListener true
                 }
 

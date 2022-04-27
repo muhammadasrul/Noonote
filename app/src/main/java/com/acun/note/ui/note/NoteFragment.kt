@@ -176,6 +176,8 @@ class NoteFragment : Fragment() {
                     }
                     viewModel.moveNote(newNoteList)
                     dialog.dismiss()
+                    noteMap.clear()
+                    viewModel.selectNote(noteMap)
                 }
             }
         }
@@ -188,7 +190,7 @@ class NoteFragment : Fragment() {
         dialog.show()
 
         bottomSheet.listView.adapter = ArrayAdapter.createFromResource(requireContext(), R.array.sort_type, android.R.layout.simple_list_item_1)
-        bottomSheet.listView.setOnItemClickListener { adapterView, view, i, l ->
+        bottomSheet.listView.setOnItemClickListener { _, _, i, _ ->
             when (i) {
                 0 -> viewModel.getAllNote(getSortedQuery(SortBy.TITLE, SortType.ASC))
                 1 -> viewModel.getAllNote(getSortedQuery(SortBy.TITLE, SortType.DESC))
@@ -237,9 +239,9 @@ class NoteFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
         menu.clear()
         if (noteMap.isEmpty()) {
-            requireActivity().menuInflater.inflate(R.menu.note_menu, menu)
+            requireActivity().menuInflater.inflate(R.menu.sort_menu, menu)
         } else {
-            requireActivity().menuInflater.inflate(R.menu.delete_menu, menu)
+            requireActivity().menuInflater.inflate(R.menu.note_menu, menu)
         }
     }
 }

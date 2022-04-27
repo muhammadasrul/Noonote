@@ -36,7 +36,7 @@ class AddNoteFragment : Fragment() {
         navArgs.note?.let { note ->
             binding.titleEditText.setText(note.title)
             binding.noteEditText.setText(note.description)
-            (requireActivity() as MainActivity).supportActionBar?.title = "All Notes"
+            (requireActivity() as MainActivity).supportActionBar?.title = "Note Details"
         }
 
         val title = binding.titleEditText

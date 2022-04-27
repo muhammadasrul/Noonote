@@ -26,19 +26,19 @@ class FolderAdapter : ListAdapter<FolderModel, FolderAdapter.FolderViewHolder>(F
     }
 
     override fun onBindViewHolder(holder: FolderViewHolder, position: Int) {
-        holder.bind(currentList[position], position)
+        holder.bind(currentList[position])
     }
 
     override fun getItemCount(): Int = currentList.size
 
     inner class FolderViewHolder(private val binding: FolderItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(folder: FolderModel, position: Int) {
+        fun bind(folder: FolderModel) {
             binding.nameTextView.text = folder.folder
             binding.root.setOnClickListener {
-                onItemClickListener?.onItemClicked(position, folder)
+                onItemClickListener?.onItemClicked(adapterPosition, folder)
             }
             binding.root.setOnLongClickListener {
-                onItemLongClickListener?.onItemClicked(position, folder)
+                onItemLongClickListener?.onItemClicked(adapterPosition, folder)
                 return@setOnLongClickListener true
             }
         }
